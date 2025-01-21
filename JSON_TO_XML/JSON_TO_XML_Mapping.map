@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" xmlns:map="default" domainID="com.ibm.msl.mapping.xml" domainIDExtension="mb" mainMap="true" targetNamespace="default" version="8.0.5.0">
+    <input path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var2"/>
+    <input derivedFrom="MB:JSON_schema_in_json_file" path="/json/JSONSchema.json" var="var1"/>
+    <output path="/NewXMLSchema.xsd"/>
+    <namespaces>
+        <namespace kind="supplement" prefix="in" uri="http://www.ibm.com/iib/msl/json"/>
+        <namespace kind="supplement" prefix="out" uri="http://www.example.org/NewXMLSchema"/>
+        <namespace kind="supplement" prefix="out2" uri="http://ibm.com/example"/>
+    </namespaces>
+    <generation engine="xquery"/>
+    <mappingDeclaration name="JSON_TO_XML_Mapping">
+        <input namespace="http://www.ibm.com/iib/msl/json" path="$var2/mb:msg(JSON,assembly,JSON,Properties)" var="MessageAssembly">
+            <cast derivedFrom="MB:JSON_TYPE" path="$MessageAssembly/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}JSONArray_JSONSchema_JsonType" ref="var1"/>
+        </input>
+        <output namespace="http://ibm.com/example" path="mb:msg(Message,assembly,XMLNSC,Properties)" var="ComIbmMessageAssembly_Message"/>
+        <foreach>
+            <input path="$MessageAssembly/JSON/spath('Data',2)/Item"/>
+            <output path="$ComIbmMessageAssembly_Message/Message"/>
+            <move>
+                <input path="name"/>
+                <output path="item/name"/>
+            </move>
+            <move>
+                <input path="surname"/>
+                <output path="item/surname"/>
+            </move>
+            <move>
+                <input path="address"/>
+                <output path="item/address"/>
+            </move>
+            <move>
+                <input path="age"/>
+                <output path="item/age"/>
+            </move>
+        </foreach>
+    </mappingDeclaration>
+</mappingRoot>
