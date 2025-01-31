@@ -1,0 +1,53 @@
+
+
+
+
+DECLARE soapEnv NAMESPACE 'http://schemas.xmlsoap.org/soap/envelope/';
+DECLARE stud NAMESPACE 'http://tempuri.org/StudentDetails';
+
+CREATE COMPUTE MODULE StudentAdd_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		--CALL CopyEntireMessage();
+		DECLARE inRef REFERENCE TO InputRoot.SOAP.Body.stud:StudentRequest;
+		SET Environment.Variables.Data = inRef;
+		DECLARE query CHARACTER;
+		SET query = 'INSERT INTO students("studentid", "studentname", "studentage", "studentweight", "studentclass") VALUES (?, ?, ?, ?, ?)';
+		SET Environment.Variables.Student[] = PASSTHRU(query,
+		inRef.stud:StudentId,
+		inRef.stud:StudentName,
+		inRef.stud:StudentAge,
+		inRef.stud:StudentWeight,
+		inRef.stud:StudentClass
+		);
+
+		CREATE FIELD OutputRoot.SOAP.Body.stud:StudentResponse;
+		DECLARE outRef REFERENCE TO OutputRoot.SOAP.Body.stud:StudentResponse;
+
+		SET OutputRoot.SOAP.Context.Namespace.(SOAP.NamespaceDecl)xmlns:soapEnv = soapEnv;
+		SET OutputRoot.SOAP.Context.Namespace.(SOAP.NamespaceDecl)xmlns:stud = stud;
+
+		SET Environment.Variables.Data[] = Select r.studentid from Database.students as r where r.studentid = inRef.stud:StudentId;
+		SET outRef.stud:StudentId = Environment.Variables.Data.studentid;
+		SET outRef.stud:Message = 'Student Added successfully';
+		SET outRef.stud:Status = 'Success';
+
+
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

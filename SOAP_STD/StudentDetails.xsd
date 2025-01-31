@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="StudentRequest">
+    <xsd:sequence>
+      <xsd:element ref="StudentId"/>
+      <xsd:element ref="StudentName"/>
+      <xsd:element ref="StudentAge"/>
+      <xsd:element ref="StudentClass"/>
+            <xsd:element ref="StudentWeight"/>
+        </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="StudentResponse">
+    <xsd:sequence>
+      <xsd:element ref="Message"/>
+      <xsd:element ref="Response"/>
+      <xsd:element ref="StudentId"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Fault">
+    <xsd:sequence>
+      <xsd:element ref="FCode"/>
+      <xsd:element ref="FString"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="StudentId" type="xsd:string"/>
+  <xsd:element name="StudentName" type="xsd:string"/>
+  <xsd:element name="StudentAge" type="xsd:string"/>
+  <xsd:element name="StudentWeight" type="xsd:string"/>
+  <xsd:element name="StudentClass" type="xsd:string"/>
+  <xsd:element name="Message" type="xsd:string"/>
+  <xsd:element name="Response" type="xsd:string"/>
+  <xsd:element name="FCode" type="xsd:string"/>
+  <xsd:element name="FString" type="xsd:string"/>
+  <xsd:element xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" ibmSchExtn:docRoot="true" name="StudentRequest" type="StudentRequest">
+  </xsd:element>
+  <xsd:element xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" ibmSchExtn:docRoot="true" name="StudentResponse" type="StudentResponse">
+  </xsd:element>
+  <xsd:element xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" ibmSchExtn:docRoot="true" name="Fault" type="Fault">
+  </xsd:element>
+</xsd:schema>

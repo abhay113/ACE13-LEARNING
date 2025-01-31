@@ -1,0 +1,23 @@
+
+
+Importing file: C:\Users\Abhay\IBM\ACET12\MYWS\StudentDetails\StudentDetailsService.wsdl
+
+The WSDL import will proceed with bindings StudentDetailsSOAP_HTTP_Binding.
+Creating wsdl schema document for file:///C:/Users/Abhay/IBM/ACET12/MYWS/StudentDetails/StudentDetailsService.wsdl.
+Parsing wsdl binding {http://tempuri.org/StudentDetails}StudentDetailsSOAP_HTTP_Binding.
+Parsing wsdl binding input StudentAdd.
+Parsing wsdl binding output StudentAdd.
+Parsing wsdl binding fault StudentAdd_Fault.
+Processing doc style for operation StudentAdd.
+Populating WSDL schema StudentDetailsService.xsd.
+Creating file StudentDetailsService.xsd in the workspace.
+Creating file /SOAP_STD/StudentDetails.xsd in the workspace.
+Copying source WSDL StudentDetailsService.wsdl to StudentDetailsService.wsdl.
+
+Elapsed time processing this message definition file: 0.403 seconds
+Number of warnings for this message definition file: 0
+
+
+Number of files processed: 1
+
+

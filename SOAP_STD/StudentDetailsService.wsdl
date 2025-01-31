@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="StudentDetails" targetNamespace="http://tempuri.org/StudentDetails" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://tempuri.org/StudentDetails" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:documentation>
+    <wsdl:appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <binding hasEncoding="false" imported="true" name="StudentDetailsSOAP_HTTP_Binding" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </wsdl:appinfo>
+  </wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/StudentDetails" xmlns:mrm="http://tempuri.org/StudentDetails">
+<xsd:include schemaLocation="StudentDetails.xsd"/>
+</xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="StudentAdd_in">
+    <wsdl:part element="tns:StudentRequest" name="StudentRequest"/>
+  </wsdl:message>
+  <wsdl:message name="StudentAdd_out">
+    <wsdl:part element="tns:StudentResponse" name="StudentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="StudentAdd_fault1">
+    <wsdl:part element="tns:Fault" name="Fault"/>
+  </wsdl:message>
+  <wsdl:portType name="StudentDetailsPortType">
+    <wsdl:operation name="StudentAdd">
+      <wsdl:input message="tns:StudentAdd_in" name="StudentAdd_Input"/>
+      <wsdl:output message="tns:StudentAdd_out" name="StudentAdd_Output"/>
+      <wsdl:fault message="tns:StudentAdd_fault1" name="StudentAdd_Fault"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="StudentDetailsSOAP_HTTP_Binding" type="tns:StudentDetailsPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="StudentAdd">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="StudentAdd_Input">
+        <soap:body parts="StudentRequest" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="StudentAdd_Output">
+        <soap:body parts="StudentResponse" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="StudentAdd_Fault">
+        <soap:fault name="StudentAdd_Fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="StudentDetailsSOAP_Service">
+    <wsdl:port binding="tns:StudentDetailsSOAP_HTTP_Binding" name="StudentDetailsSOAP_Port">
+      <soap:address location="http://localhost:7800/StudentDetails"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
