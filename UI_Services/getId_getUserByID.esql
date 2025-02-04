@@ -1,0 +1,34 @@
+
+CREATE COMPUTE MODULE getId_getUserByID
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		CALL CopyEntireMessage();
+		-- DECLARE query CHARACTER;
+		-- DECLARE userId INTEGER;
+		-- SET userId = CAST(InputRoot.HTTPRequest.PathVar['id'] AS INT);
+		-- -- Update the query to use only schema and table names
+		-- SET query = 'SELECT * FROM users where id =? ';
+		-- -- Execute the query and store the result
+		-- SET Environment.Variables.User[] = PASSTHRU(query,InputRoot.JSON.Data.Id);
+		-- -- Map the results to OutputRoot.JSON
+		-- SET OutputRoot.JSON.Data.User[] = Environment.Variables.User[];
+
+		SET OutputRoot.JSON.Data.Message = 'hello';
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
