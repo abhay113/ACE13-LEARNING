@@ -3,6 +3,7 @@ CREATE COMPUTE MODULE postUsers_Compute
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
 		-- CALL CopyMessageHeaders();
+		
 		DECLARE query CHARACTER 'INSERT INTO users("name", "email", "password", "age", "city") VALUES (?, ?, ?, ?, ?)';
 		SET Environment.Variables.User = PASSTHRU(query,
 		InputRoot.JSON.Data.name,
