@@ -9,8 +9,23 @@ CREATE COMPUTE MODULE getUsers_Compute
 		-- Execute the query and store the result
 		SET Environment.Variables.Users[] = PASSTHRU(query);
 		-- Map the results to OutputRoot.JSON
-		SET OutputRoot.JSON.Data.UsersList[] = Environment.Variables.Users[];
-	
+		-- SET OutputRoot.JSON.Data.UsersList[] = Environment.Variables.Users[];
+
+		CREATE LASTCHILD of OutputRoot DOMAIN('JSON');
+		CREATE FIELD OutputRoot.JSON.Data IDENTITY (JSON.Array)Data;
+
+		DECLARE I INTEGER 1;
+		WHILE I <= CARDINALITY(Environment.Variables.Users[]) DO
+
+			SET OutputRoot.JSON.Data.User[I].Name = Environment.Variables.Users[I].name;
+			SET OutputRoot.JSON.Data.User[I].Email = Environment.Variables.Users[I].email;
+			SET OutputRoot.JSON.Data.User[I].Password = Environment.Variables.Users[I].password;
+			SET OutputRoot.JSON.Data.User[I].Age = Environment.Variables.Users[I].age;
+			SET OutputRoot.JSON.Data.User[I].City = Environment.Variables.Users[I].city;
+			SET I = I + 1;
+		END WHILE;
+		RETURN TRUE;
+
 
 		RETURN TRUE;
 	END;
